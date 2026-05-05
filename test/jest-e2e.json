@@ -1,0 +1,18 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "moduleNameMapper": {
+    "^@app/common$": "<rootDir>/../libs/common/src",
+    "^@app/common/(.*)$": "<rootDir>/../libs/common/src/$1",
+    "^@app/database$": "<rootDir>/../libs/database/src",
+    "^@app/database/(.*)$": "<rootDir>/../libs/database/src/$1",
+    "^@app/blockchain$": "<rootDir>/../libs/blockchain/src",
+    "^@app/blockchain/abis/(.*)$": "<rootDir>/../libs/blockchain/src/abis/$1",
+    "^@app/blockchain/(.*)$": "<rootDir>/../libs/blockchain/src/$1"
+  },
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}

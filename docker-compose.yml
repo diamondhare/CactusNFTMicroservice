@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cactus-postgres
+    environment:
+      POSTGRES_USER: cactus
+      POSTGRES_PASSWORD: cactus
+      POSTGRES_DB: cactus_nft
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cactus -d cactus_nft"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  hardhat-node:
+    build:
+      context: ../cactusNFT
+      dockerfile: ../CactusNFTMicroservice/docker/hardhat/Dockerfile
+    container_name: cactus-hardhat-node
+    command: ["npx", "hardhat", "node", "--hostname", "0.0.0.0", "--port", "8545"]
+    ports:
+      - "8545:8545"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
