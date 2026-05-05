@@ -55,6 +55,15 @@
         "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
     },
+    "queue": {
+      "type": "library",
+      "root": "libs/queue",
+      "entryFile": "index",
+      "sourceRoot": "libs/queue/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/queue/tsconfig.lib.json"
+      }
+    },
     "events-service": {
       "type": "application",
       "root": "apps/events-service",

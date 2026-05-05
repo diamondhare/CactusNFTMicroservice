@@ -8,6 +8,8 @@
     "^@app/common/(.*)$": "<rootDir>/../libs/common/src/$1",
     "^@app/database$": "<rootDir>/../libs/database/src",
     "^@app/database/(.*)$": "<rootDir>/../libs/database/src/$1",
+    "^@app/queue$": "<rootDir>/../libs/queue/src",
+    "^@app/queue/(.*)$": "<rootDir>/../libs/queue/src/$1",
     "^@app/blockchain$": "<rootDir>/../libs/blockchain/src",
     "^@app/blockchain/abis/(.*)$": "<rootDir>/../libs/blockchain/src/abis/$1",
     "^@app/blockchain/(.*)$": "<rootDir>/../libs/blockchain/src/$1"

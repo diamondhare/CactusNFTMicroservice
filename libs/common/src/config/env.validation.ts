@@ -6,6 +6,9 @@ const DEFAULT_ENV = {
   DATABASE_USER: 'cactus',
   DATABASE_PASSWORD: 'cactus',
   DATABASE_NAME: 'cactus_nft',
+  REDIS_HOST: 'localhost',
+  REDIS_PORT: '6379',
+  MINT_GEN1_QUEUE: 'mint-gen1-cactus',
   HARDHAT_RPC_URL: 'http://127.0.0.1:8545',
   EVENTS_START_BLOCK: '0',
   API_PORT: '3000',
@@ -20,6 +23,7 @@ export function validateEnv(config: AppEnv): AppEnv {
   };
 
   assertNumber(merged.DATABASE_PORT, 'DATABASE_PORT');
+  assertNumber(merged.REDIS_PORT, 'REDIS_PORT');
   assertNumber(merged.API_PORT, 'API_PORT');
   assertNumber(merged.EVENTS_START_BLOCK, 'EVENTS_START_BLOCK');
   assertUrl(merged.HARDHAT_RPC_URL, 'HARDHAT_RPC_URL');
