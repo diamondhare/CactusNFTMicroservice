@@ -5,9 +5,9 @@ import {
   Unique,
 } from 'typeorm';
 
-@Entity({ name: 'cactus-minted' })
-@Unique('UQ_cactus_minted_tx', ['transactionHash'])
-export class CactusMintedEventEntity {
+@Entity({ name: 'cactus-nft-data' })
+@Unique('UQ_cactus_nft_data_transaction_hash', ['transactionHash'])
+export class CactusNftDataEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

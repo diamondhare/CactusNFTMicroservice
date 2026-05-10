@@ -5,9 +5,6 @@ export type CactusMintedEventPayload = {
   transactionHash: string;
   cactusTokenId: bigint;
   owner: string;
-  parentA: bigint;
-  parentB: bigint;
-  generation: bigint;
   genome: bigint;
 };
 
@@ -32,9 +29,9 @@ export class CactusMintedEventProcessor {
       transactionHash: payload.transactionHash,
       cactusTokenId: payload.cactusTokenId.toString(),
       owner: payload.owner,
-      parentA: payload.parentA.toString(),
-      parentB: payload.parentB.toString(),
-      generation: Number(payload.generation),
+      parentA: "0",
+      parentB: "0",
+      generation: 1,
       genome: payload.genome.toString(),
     };
   }

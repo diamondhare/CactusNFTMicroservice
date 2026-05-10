@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CactusMintedEventEntity } from '@app/database/entities/gen1-minted-cactus-event.entity';
 import { Repository } from 'typeorm';
 
 import type { PersistableCactusMintedEvent } from '../processors/gen1-cactus-minted.processor';
+import { CactusNftDataEntity } from '@app/database/entities/cactus-nft-data-entity';
 
 @Injectable()
 export class CactusMintedEventRepository {
   constructor(
-    @InjectRepository(CactusMintedEventEntity)
-    private readonly repository: Repository<CactusMintedEventEntity>,
+    @InjectRepository(CactusNftDataEntity)
+    private readonly repository: Repository<CactusNftDataEntity>,
   ) {}
 
   async saveOnce(event: PersistableCactusMintedEvent): Promise<void> {
     await this.repository.upsert(event, {
-      conflictPaths: ['transactionHash', 'logIndex'],
+      conflictPaths: ['transactionHash'],
       skipUpdateIfNoValuesChanged: true,
     });
   }

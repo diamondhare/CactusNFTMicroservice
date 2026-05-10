@@ -2,6 +2,8 @@ import { DataSource } from 'typeorm';
 
 import { SeedMintedEventEntity } from './entities/seed-minted-event.entity';
 import { CreateSeedMintedEvents1710000000000 } from './migrations/1710000000000-CreateSeedMintedEvents';
+import { InsertOriginCactus1710000000001 } from './migrations/1710000000001-InsertOriginCactus';
+import { CactusNftDataEntity } from './entities/cactus-nft-data-entity';
 
 export default new DataSource({
   type: 'postgres',
@@ -10,7 +12,10 @@ export default new DataSource({
   username: process.env.DATABASE_USER ?? 'cactus',
   password: process.env.DATABASE_PASSWORD ?? 'cactus',
   database: process.env.DATABASE_NAME ?? 'cactus_nft',
-  entities: [SeedMintedEventEntity],
-  migrations: [CreateSeedMintedEvents1710000000000],
+  entities: [SeedMintedEventEntity, CactusNftDataEntity],
+  migrations: [
+    CreateSeedMintedEvents1710000000000,
+    InsertOriginCactus1710000000001,
+  ],
   synchronize: false,
 });

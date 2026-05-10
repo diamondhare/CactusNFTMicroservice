@@ -10,7 +10,12 @@ import {
 } from '@app/blockchain';
 import type { ContractAddresses } from '@app/blockchain';
 import { ConfigService } from '@nestjs/config';
-import { Contract, EventLog, JsonRpcProvider } from 'ethers';
+import {
+  Contract,
+  ContractEventPayload,
+  EventLog,
+  JsonRpcProvider,
+} from 'ethers';
 
 import { CactusMintedEventProcessor } from '../processors/gen1-cactus-minted.processor';
 import { CactusMintedEventRepository } from '../repositories/gen1-cactus-minted.repository';
@@ -49,20 +54,14 @@ export class Gen1CactusMintedListener implements OnApplicationBootstrap {
       (
         tokenId: bigint,
         owner: string,
-        parentA: bigint,
-        parentB: bigint,
-        generation: bigint,
         genome: bigint,
-        event: EventLog,
+        event: ContractEventPayload,
       ) => {
         void this.handleCactusMinted({
           contractAddress: cactus721Address,
-          transactionHash: event.transactionHash,
+          transactionHash: event.log.transactionHash,
           cactusTokenId: tokenId,
           owner,
-          parentA,
-          parentB,
-          generation,
           genome,
         });
       },
