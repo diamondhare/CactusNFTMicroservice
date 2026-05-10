@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { SeedMintedEventProcessor } from './seed-minted-event.processor';
+import { CactusMintedEventProcessor } from './gen1-cactus-minted.processor';
 
 @Module({
-  providers: [SeedMintedEventProcessor],
-  exports: [SeedMintedEventProcessor],
+  providers: [CactusMintedEventProcessor],
+  exports: [CactusMintedEventProcessor],
 })
 export class EventProcessorsModule {}
