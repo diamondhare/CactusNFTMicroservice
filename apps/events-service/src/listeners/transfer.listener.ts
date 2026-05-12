@@ -5,6 +5,7 @@ import { Inject, Injectable, Logger, OnApplicationBootstrap } from "@nestjs/comm
 import { ConfigService } from "@nestjs/config";
 import { Contract, ContractEventPayload, EventLog, JsonRpcProvider } from "ethers";
 import { TransferEventProcessor } from "../processors/transfer.processor";
+import { TransferEventRepository } from "../repositories/transfer.repository";
 
 
 @Injectable()
@@ -48,7 +49,7 @@ export class TransferListener implements OnApplicationBootstrap {
                     transactionHash: event.log.transactionHash,
                     from,
                     to,
-                    tokenId,
+                    cactusTokenId: tokenId,
                 });
             },
         );
@@ -78,7 +79,7 @@ export class TransferListener implements OnApplicationBootstrap {
                 transactionHash: event.transactionHash,
                 from,
                 to,
-                tokenId,
+                cactusTokenId: tokenId,
             });
         }
     }
@@ -88,14 +89,14 @@ export class TransferListener implements OnApplicationBootstrap {
         transactionHash: string;
         from: string;
         to: string;
-        tokenId: bigint;
+        cactusTokenId: bigint;
     }) {
         try {
             this.logger.log(payload, `Processing Transfer event`);
             const persistentEvent = await this.processor.toPresistable(payload);
 
             await this.repository.update(persistentEvent);
-            this.logger.log(`CactusTokenId ${payload.tokenId} transferred from ${payload.from} to ${payload.to}`);
+            this.logger.log(`CactusTokenId ${payload.cactusTokenId} transferred from ${payload.from} to ${payload.to}`);
         } catch (error) {
             this.logger.error(`Failed to process Transfer event`,error);
         }
