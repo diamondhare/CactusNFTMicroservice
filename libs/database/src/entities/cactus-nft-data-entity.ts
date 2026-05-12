@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'cactus-nft-data' })
-@Unique('UQ_cactus_nft_data_transaction_hash', ['transactionHash'])
+@Unique('UQ_cactus_nft_data_transaction_hash', ['transactionHash', 'cactusTokenId'])
 export class CactusNftDataEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
