@@ -86,11 +86,7 @@ export class Gen1CactusMintedListener implements OnApplicationBootstrap {
         continue;
       }
 
-      const [
-        tokenId,
-        owner,
-        genome,
-      ] = event.args;
+      const [tokenId, owner, genome] = event.args;
 
       await this.handleCactusMinted({
         contractAddress: cactus721Address,
@@ -102,7 +98,7 @@ export class Gen1CactusMintedListener implements OnApplicationBootstrap {
     }
 
     this.logger.log(
-      `Backfilled ${events.length} SeedMinted events from block ${startBlock}`,
+      `Backfilled ${events.length} Gen1CactusMinted events from block ${startBlock}`,
     );
   }
 
