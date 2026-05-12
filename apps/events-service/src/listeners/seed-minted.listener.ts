@@ -11,7 +11,12 @@ import {
 import type { ContractAddresses } from '@app/blockchain';
 import { SEED_721_ABI } from '@app/blockchain/abis/seed721.abi';
 import { ConfigService } from '@nestjs/config';
-import { Contract, EventLog, JsonRpcProvider } from 'ethers';
+import {
+  Contract,
+  ContractEventPayload,
+  EventLog,
+  JsonRpcProvider,
+} from 'ethers';
 
 import { SeedMintedEventProcessor } from '../processors/seed-minted-event.processor';
 import { SeedMintedEventRepository } from '../repositories/seed-minted-event.repository';
@@ -54,13 +59,13 @@ export class SeedMintedListener implements OnApplicationBootstrap {
         generation: bigint,
         genome: bigint,
         germinationChanceBps: bigint,
-        event: EventLog,
+        event: ContractEventPayload,
       ) => {
         void this.handleSeedMinted({
           contractAddress: seed721Address,
-          transactionHash: event.transactionHash,
-          logIndex: event.index,
-          blockNumber: event.blockNumber,
+          transactionHash: event.log.transactionHash,
+          logIndex: event.log.index,
+          blockNumber: event.log.blockNumber,
           seedTokenId: tokenId,
           owner,
           parentA,
