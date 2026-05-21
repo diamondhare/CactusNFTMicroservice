@@ -1,24 +1,25 @@
 import { Injectable } from "@nestjs/common";
-
-export type BotContext = {
-    cactiCount: number;
-    lastAction: string;
-    cactiOpenFromBreeding: number;
-    ethBalance: number;
-    walletAddress: string;
-    secretKey: string;
-};
+import { GetBotContextById } from "./db/get-bot-context-by-id";
+import { BotsRedisService } from "@app/common/redis/bots/botsRedis.service";
+import { BotContext } from "./bot.types";
 
 @Injectable()
 export class BotContextService {
+    constructor(
+        private readonly repository: GetBotContextById,
+        private readonly botsRedisService: BotsRedisService
+    ) {}
     async getContext(botId: string): Promise<BotContext> {
+        const botContext = await this.repository.getOne(botId);
+        const botLastAction = await this.botsRedisService.botGetStatus(botId);
+
         return {
-            cactiCount: 10, 
-            lastAction: "breed", 
-            cactiOpenFromBreeding: 2,
-            walletAddress: "0x1234567890abcdef1234567890abcdef12345678",
-            secretKey: "0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef",
-            ethBalance: 1
+            cactiCount: botContext.ownedCacti, 
+            lastAction: botLastAction, 
+            cactiOpenFromBreeding: botContext.cactiOpenForBreeding,
+            walletAddress: botContext.walletAddress,
+            secretKey: botContext.secretKey,
+            ethBalance: botContext.ethBalance
         };
     }
 }
