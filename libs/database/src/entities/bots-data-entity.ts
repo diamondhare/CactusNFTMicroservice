@@ -1,9 +1,8 @@
 import {
-    BeforeInsert,
+  BeforeInsert,
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  Unique,
 } from 'typeorm';
 
 //Use v7 because it's gigachad verison of default uuid (time-sorted and better for db index performance)

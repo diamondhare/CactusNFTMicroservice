@@ -1,6 +1,7 @@
-import { BotActions } from "./enums/bot-actions-enum";
+import { BotActions } from "../src/enums/bot-actions-enum";
 
 export type BotContext = {
+    botId: string;
     cactiCount: number;
     lastAction: BotActions;
     cactiOpenFromBreeding: number;

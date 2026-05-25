@@ -1,10 +1,10 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { BotEngine } from "../bot.engine";
+import { Logger } from "@nestjs/common";
 import { Processor, WorkerHost } from "@nestjs/bullmq";
 import { Job } from "bullmq";
 import { RunBotJob } from "@app/queue/types/run-bot-job";
 import { BotsQueueService } from "./bot-queue.service";
 import { QUEUE_NAMES } from "@app/queue";
+import { BotEngine } from "../bot.engine";
 
 @Processor(QUEUE_NAMES.BOTS, {
     concurrency: 1,

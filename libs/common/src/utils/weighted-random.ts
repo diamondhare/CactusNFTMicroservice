@@ -1,6 +1,7 @@
 
     export type WeightedAction<T> = {
         action: T;
+        executable: boolean;
         weight: number;
     };
 

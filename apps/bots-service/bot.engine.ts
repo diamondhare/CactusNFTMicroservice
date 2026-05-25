@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { BotContextService } from "./src/bot.context";
+import { BotContextService } from "../bots-service/src/bot.context";
+import { BotsRedisService } from "@app/common/redis/bots/botsRedis.service";
 import { BotActionSelector } from "./bot.selector";
-import { checkBotIdleTime } from "@app/common/redis/botIdleCheck/bot-idle-check";
 
 @Injectable()
 export class BotEngine {
+    
     constructor(
         private readonly contextService: BotContextService,
         private readonly botRepository: BotActionSelector,
@@ -12,12 +13,7 @@ export class BotEngine {
     
     async tick(botId: string) {
 
-        if(await checkBotIdleTime(botId)) {
-            return;
-        }
-
         const context = await this.contextService.getContext(botId);
-
         const action = await this.botRepository.selectAction(context);
 
         if(!action) {

@@ -6,24 +6,45 @@ import { DatabaseModule } from '@app/database';
 import { BotsController } from '../bots.controller';
 import { BotsQueueService } from './bot-queue.service';
 import { BotProcessor } from './bot.processor';
-import { BotEngine } from '../bot.engine';
 import { BotContextService } from './bot.context';
-import { BotActionSelector } from '../bot.selector';
 import { CloseForBreedingAction } from './actions/close-from-breeding.action';
 import { OpenForBreedingAction } from './actions/open-for-breeding.action';
 import { TransferAction } from './actions/transfer.action';
 import { RunBotQueueModule } from '@app/queue/run-bot-queue.module';
 import { CactusBreedingService } from '@app/blockchain/contracts/cactus-breeding/cactus-breeding.service';
 import { Cactus721Service } from '@app/blockchain/contracts/cactus721/cactus721.service';
+import { BotsRedisService } from '@app/common/redis/bots/botsRedis.service';
+import { GetBotContextById } from './db/get-bot-context-by-id';
+import { BotsDataEntity } from '@app/database/entities/bots-data-entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BotActionSelector } from '../bot.selector';
+import { BotEngine } from '../bot.engine';
+import { SetBotIdle } from './actions/set-bot-idle.action';
 
 @Module({
   imports: [
     CommonModule,
     DatabaseModule,
     BlockchainModule,
-    RunBotQueueModule
+    RunBotQueueModule,
+    TypeOrmModule.forFeature([BotsDataEntity])
   ],
-  providers: [Logger, BotsQueueService, BotProcessor, BotEngine, BotContextService, BotActionSelector, CloseForBreedingAction, OpenForBreedingAction, TransferAction, CactusBreedingService, Cactus721Service],
+  providers: [
+    Logger, 
+    BotsQueueService,
+    BotsRedisService, 
+    BotProcessor, 
+    BotEngine, 
+    BotContextService, 
+    BotActionSelector, 
+    CloseForBreedingAction, 
+    OpenForBreedingAction, 
+    TransferAction, 
+    SetBotIdle,
+    CactusBreedingService, 
+    Cactus721Service,
+    GetBotContextById,
+  ],
   controllers: [BotsController],
 })
 export class BotsServiceModule {}

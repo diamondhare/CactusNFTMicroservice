@@ -1,7 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  CONTRACT_ADDRESSES,
-} from '@app/blockchain';
+import { CONTRACT_ADDRESSES } from '@app/blockchain';
 import type { ContractAddresses } from '@app/blockchain';
 import { CACTUS_721_ABI } from '@app/blockchain/abis/cactus721.abi';
 import type { MintGen1CactusJob } from '@app/queue';
