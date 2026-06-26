@@ -5,5 +5,5 @@ export interface BotActionInterface {
 
     getWeight(context: any): Promise<number>;
 
-    execute(context: any): Promise<void>;
+    execute(context: any): Promise<string>;
 }

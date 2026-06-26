@@ -36,6 +36,9 @@ export class CactusNftDataEntity {
   @Column({ type: 'numeric', precision: 78, scale: 0 })
   genome!: string;
 
+  @Column({type: 'boolean'})
+  isOpenForBreeding!: boolean;
+
   //hook for manual creation of id 
   @BeforeInsert()
     generateId() {

@@ -1,4 +1,4 @@
-import { Contract, InterfaceAbi, Wallet } from "ethers";
+import { Contract, ContractTransactionResponse, InterfaceAbi, Wallet } from "ethers";
 
 
 export async function approve(
@@ -13,9 +13,15 @@ export async function approve(
         cactus721Abi,
         signer,
     );
-    const approve = cactus721.getFunction('approve');
-    const tx = await approve(to, tokenId);
-    const receipt = await tx.wait();
+    // console.log(`Approving tokenId ${tokenId} to ${to} on contract ${cactus721Address}`);
+    try {
+        const approve = cactus721.getFunction('approve');
+        const tx = (await approve(to, tokenId)) as ContractTransactionResponse;
+        const receipt = await tx.wait();
 
-    return receipt?.hash ?? tx.hash;
+        return receipt?.hash ?? tx.hash;
+    } catch (error) {
+        console.error("Error occurred while approving NFT:", error);
+        throw error;
+    }
 }

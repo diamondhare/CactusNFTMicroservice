@@ -19,6 +19,7 @@ export class InsertOriginCactus1710000000001 implements MigrationInterface {
         "parentB" numeric(78,0) NOT NULL,
         "generation" integer NOT NULL,
         "genome" numeric(78,0) NOT NULL,
+        "isOpenForBreeding" boolean NOT NULL,
         CONSTRAINT "PK_cactus_nft_data_id" PRIMARY KEY ("id")
       )
     `);

@@ -1,7 +1,7 @@
 import { Logger, Module } from '@nestjs/common';
 import { BlockchainModule } from '@app/blockchain';
 import { CommonModule } from '@app/common';
-import { DatabaseModule } from '@app/database';
+import { BotsActionHistoryEntity, DatabaseModule } from '@app/database';
 
 import { BotsController } from '../bots.controller';
 import { BotsQueueService } from './bot-queue.service';
@@ -20,6 +20,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BotActionSelector } from '../bot.selector';
 import { BotEngine } from '../bot.engine';
 import { SetBotIdle } from './actions/set-bot-idle.action';
+import { WriteBotAction } from './db/write-bot-action';
+import { DbBotModule } from './db/db-bot.module';
+import { BotSignerProvider } from '@app/blockchain/providers/bot-signer.provider';
 
 @Module({
   imports: [
@@ -27,7 +30,8 @@ import { SetBotIdle } from './actions/set-bot-idle.action';
     DatabaseModule,
     BlockchainModule,
     RunBotQueueModule,
-    TypeOrmModule.forFeature([BotsDataEntity])
+    DbBotModule,
+    TypeOrmModule.forFeature([BotsDataEntity, BotsActionHistoryEntity])
   ],
   providers: [
     Logger, 
@@ -44,6 +48,8 @@ import { SetBotIdle } from './actions/set-bot-idle.action';
     CactusBreedingService, 
     Cactus721Service,
     GetBotContextById,
+    WriteBotAction,
+    BotSignerProvider,
   ],
   controllers: [BotsController],
 })

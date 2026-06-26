@@ -4,13 +4,15 @@ import { CactusBreedingService } from "@app/blockchain/contracts/cactus-breeding
 import { BotsRedisService } from "@app/common/redis/bots/botsRedis.service";
 import { BotActions } from "../enums/bot-actions-enum";
 import { BotContext } from "apps/bots-service/types/bot-context.types";
+import { GetValidCactusForBreedingOpen } from "../db/get-valid-cactus-for-breeding-open";
 
 @Injectable()
 export class OpenForBreedingAction implements BotActionInterface {
-    type = "open-for-breeding";
+    type = BotActions.OpenForBreeding;
 
     constructor(
         private readonly cactusBreedingService: CactusBreedingService,
+        private readonly getValidCactusForBreedingOpen: GetValidCactusForBreedingOpen,
         private readonly botsRedisService: BotsRedisService,
     ) {}
 
@@ -22,9 +24,10 @@ export class OpenForBreedingAction implements BotActionInterface {
         return 30;
     }
 
-    async execute(context: BotContext) {
+    async execute(context: BotContext): Promise<string> {
         Logger.log("Executing open for breeding action");
         await this.botsRedisService.botSetStatus(context.botId, BotActions.OpenForBreeding);
-        // await this.cactusBreedingService.openForBreeding(chooseCactusToOpenForBreeding(context.walletAddress), context.walletAddress);
+        const tx = await this.cactusBreedingService.openForBreeding(BigInt(await this.getValidCactusForBreedingOpen.getOne(context.walletAddress)));
+        return tx;
     }
 }

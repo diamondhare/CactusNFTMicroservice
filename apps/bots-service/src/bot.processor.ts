@@ -21,7 +21,7 @@ export class BotProcessor extends WorkerHost  {
 
     async process(job: Job<RunBotJob>) {
         this.logger.log(`Starting bot ${job.data.botId}...`);
-        await this.botEngine.tick(job.data.botId);
+        await this.botEngine.tick(job.data.botId, job.id!);
         this.logger.log(`Job completed for bot ${job.data.botId}`);
         this.logger.log(`Starting next job for bot ${job.data.botId}...`);
         await this.botsQueueService.enqueue(job.data.botId);

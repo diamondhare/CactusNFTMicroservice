@@ -1,14 +1,9 @@
-import { GetEthBalanceByAddress } from "@app/blockchain/utils/get-eth-balance-by-address";
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class BotsData1779121027046 implements MigrationInterface {
     name = "BotsData1779121027046";
-    // constructor(
-    //     private readonly balanceGetter: GetEthBalanceByAddress,
-    // ) {}
     public async up(queryRunner: QueryRunner): Promise<void> {
 
-        console.error('Starting migration...');
         await queryRunner.query(`
             CREATE TABLE IF NOT EXISTS "bots-data" (
                 "id" uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -20,7 +15,6 @@ export class BotsData1779121027046 implements MigrationInterface {
                 CONSTRAINT "PK_bots_data_id" PRIMARY KEY ("id")
             )
         `);
-        console.error('Table created');
 
         // for(let i = 1; i <= 3; i++) {
         //     const walletAddress = process.env[`BOT_ADDRESS_${i}`];
