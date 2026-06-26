@@ -18,4 +18,11 @@ export class BotsController {
   ) {
     return this.botsQueueService.enqueue(botId);
   }
+
+  @Post(':id/stop')
+  async stopBot(
+    @Param('id') botId: string,
+  ) {
+    return this.botsQueueService.dequeue(botId);
+  }
 }
