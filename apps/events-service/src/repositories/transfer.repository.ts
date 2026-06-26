@@ -14,6 +14,6 @@ export class TransferEventRepository {
   ) {}
   
   async update(event: PersistableTransferEvent): Promise<void> {
-    await this.repository.update(event.cactusTokenId, {owner: event.to});
+    await this.repository.update({cactusTokenId: event.cactusTokenId}, {owner: event.to});
   }
 }

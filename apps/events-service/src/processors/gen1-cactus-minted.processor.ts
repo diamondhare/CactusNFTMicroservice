@@ -6,6 +6,7 @@ export type CactusMintedEventPayload = {
   cactusTokenId: bigint;
   owner: string;
   genome: bigint;
+  isOpenForBreeding: boolean;
 };
 
 export type PersistableCactusMintedEvent = {
@@ -17,6 +18,7 @@ export type PersistableCactusMintedEvent = {
   parentB: string;
   generation: number;
   genome: string;
+  isOpenForBreeding: boolean;
 };
 
 @Injectable()
@@ -33,6 +35,7 @@ export class CactusMintedEventProcessor {
       parentB: "0",
       generation: 1,
       genome: payload.genome.toString(),
+      isOpenForBreeding: false,
     };
   }
 }

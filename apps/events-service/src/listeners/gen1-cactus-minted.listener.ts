@@ -63,6 +63,7 @@ export class Gen1CactusMintedListener implements OnApplicationBootstrap {
           cactusTokenId: tokenId,
           owner,
           genome,
+          isOpenForBreeding: false,
         });
       },
     );
@@ -94,6 +95,7 @@ export class Gen1CactusMintedListener implements OnApplicationBootstrap {
         cactusTokenId: tokenId as bigint,
         owner: owner as string,
         genome: genome as bigint,
+        isOpenForBreeding: false,
       });
     }
 
@@ -108,6 +110,7 @@ export class Gen1CactusMintedListener implements OnApplicationBootstrap {
     cactusTokenId: bigint;
     owner: string;
     genome: bigint;
+    isOpenForBreeding: boolean;
   }) {
     try {
       this.logger.log(payload, 'Processing Gen1CactusMinted event');
