@@ -1,7 +1,7 @@
 import { CactusNftDataEntity } from "@app/database";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { ILike, Repository } from "typeorm";
 
 @Injectable()
 export class GetValidCactusForTransfer {
@@ -10,12 +10,18 @@ export class GetValidCactusForTransfer {
         private readonly repository: Repository<CactusNftDataEntity>,
     ) {}
 
-    async getOne(botAddress: string): Promise<string> {
-        const allCactiClosedForBreeding = await this.repository.findBy({owner: botAddress, isOpenForBreeding: false});
-        if (allCactiClosedForBreeding.length === 0) {
-            throw new NotFoundException(`No valid cacti with closed status found for address ${botAddress}`);
+    async getAll(botAddress: string): Promise<string[]> {
+        const candidates = await this.repository.findBy({
+            owner: ILike(botAddress),
+            isOpenForBreeding: false,
+        });
+        if (candidates.length === 0) {
+            throw new NotFoundException("No valid cacti with closed status found for address " + botAddress);
         }
-        const randomPosition = Math.floor(Math.random() * allCactiClosedForBreeding.length);
-        return allCactiClosedForBreeding[randomPosition].cactusTokenId;
+        return candidates.map((cactus) => cactus.cactusTokenId);
+    }
+
+    async updateOwner(cactusTokenId: string, owner: string): Promise<void> {
+        await this.repository.update({ cactusTokenId }, { owner });
     }
 }

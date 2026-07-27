@@ -10,15 +10,16 @@ export class GetValidTransferReceiver {
         private readonly repository: Repository<BotsDataEntity>,
     ) {}
 
-    async getOne(botId: string): Promise<string> {
+    async getOne(botId: string): Promise<{ botId: string; walletAddress: string }> {
         const allValidWalletAdresses = await this.repository.find({
-            select: ['walletAddress'],
+            select: ['id', 'walletAddress'],
             where: { id: Not(botId) }
         });
         if (allValidWalletAdresses.length === 0) {
             throw new NotFoundException(`No valid wallets to transfer found for bot ${botId}`);
         }
         const randomPosition = Math.floor(Math.random() * allValidWalletAdresses.length);
-        return allValidWalletAdresses[randomPosition].walletAddress;
+        const receiver = allValidWalletAdresses[randomPosition];
+        return { botId: receiver.id, walletAddress: receiver.walletAddress };
     }
 }

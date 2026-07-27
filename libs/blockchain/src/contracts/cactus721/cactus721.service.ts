@@ -58,9 +58,15 @@ export class Cactus721Service {
         // This might involve interacting with a blockchain or a database
     }
 
-    async ownerOf(tokenId: bigint): Promise<string> {
-        // Implement the logic to retrieve the owner of the NFT with the given tokenId
-        // This might involve interacting with a blockchain or a database
-        return "ownerAddress"; // Placeholder return value
+    async ownerOf(tokenId: bigint, signer: Wallet): Promise<string> {
+        if (this.contractAddresses.cactus721 === undefined) {
+            throw new Error("CACTUS_721_ADDRESS is not configured");
+        }
+        const cactus721 = new Contract(
+            this.contractAddresses.cactus721,
+            this.cactus721Abi,
+            signer,
+        );
+        return await cactus721.ownerOf(tokenId);
     }
 }
