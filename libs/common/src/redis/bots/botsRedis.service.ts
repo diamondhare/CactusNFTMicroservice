@@ -57,4 +57,12 @@ export class BotsRedisService {
             status: BotActions.Idle
         });
     }
+
+    async botSetRunning(botId: string, running: boolean): Promise<void> {
+        await this.redis.hset(`bot:${botId}`, { running: running ? "true" : "false" });
+    }
+
+    async botIsRunning(botId: string): Promise<boolean> {
+        return (await this.redis.hget(`bot:${botId}`, "running")) === "true";
+    }
 }
